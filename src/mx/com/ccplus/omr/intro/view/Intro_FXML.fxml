@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="832.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.com.ccplus.omr.intro.view.Intro_FXMLController">
+    <stylesheets>
+        <URL value="@intro_fxml.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="377.0" layoutY="14.0" styleClass="titulo" text="OMR" />
+      <Pane layoutX="333.0" layoutY="76.0" prefHeight="322.0" prefWidth="465.0" styleClass="containingPane">
+         <children>
+            <Label layoutX="88.0" layoutY="14.0" styleClass="subtitulo" text="Leer múltiples archivos" />
+            <Pane layoutX="18.0" layoutY="95.0" prefHeight="204.0" prefWidth="206.0" styleClass="clickablePane">
+               <children>
+                  <Label layoutX="14.0" layoutY="110.0" prefHeight="80.0" prefWidth="132.0" text="Nueva plantilla" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane layoutX="242.0" layoutY="95.0" prefHeight="204.0" prefWidth="206.0" styleClass="clickablePane">
+               <children>
+                  <Label layoutX="14.0" layoutY="110.0" prefHeight="80.0" prefWidth="132.0" text="Cargar archivos" wrapText="true" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane layoutX="47.0" layoutY="114.0" prefHeight="246.0" prefWidth="248.0" styleClass="clickablePane">
+         <children>
+            <Label layoutX="14.0" layoutY="193.0" text="Leer un archivo" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
