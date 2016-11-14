@@ -1,0 +1,52 @@
+.mainFxmlClass {
+    -fx-background-color: #e3d4fc;
+    -fx-background-color: #e5dbf5;
+    -fx-font-size: 8pt;
+}
+
+.titulo{
+    -fx-font-size: 25pt;
+    -fx-font-weight: bold;
+}
+
+.subtitulo{
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #999999;
+}
+
+.button{
+    -fx-background-radius: 0;
+    -fx-background-color: white;
+    -fx-text-fill: #bf9df8;
+    -fx-text-fill: #a778f5;
+    
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+}
+
+.button:hover{
+    -fx-background-color: #bf9df8;
+    -fx-text-fill: white;
+}
+
+.button:pressed{
+    -fx-text-fill: black;
+}
+
+.stackpane {
+    -fx-background-color: #00000020;
+    -fx-border-color: black;
+    -fx-border-color: #bf9df8;
+    -fx-border-width: 0px 0px 0px 5px;
+}
+
+.containingPane{
+    -fx-background-color: #0000000c;
+}
+
+.text-field{
+    -fx-background-radius: 0;
+    -fx-background-color: white;
+    -fx-font-size: 10pt;
+}

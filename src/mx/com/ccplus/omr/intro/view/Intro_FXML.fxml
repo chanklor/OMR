@@ -28,7 +28,7 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="47.0" layoutY="114.0" prefHeight="246.0" prefWidth="248.0" styleClass="clickablePane">
+      <Pane layoutX="47.0" layoutY="114.0" onMouseClicked="#handleOneTimeButtonOnClick" prefHeight="246.0" prefWidth="248.0" styleClass="clickablePane">
          <children>
             <Label layoutX="14.0" layoutY="193.0" text="Leer un archivo" />
          </children>

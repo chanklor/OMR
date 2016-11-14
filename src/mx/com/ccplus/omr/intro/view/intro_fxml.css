@@ -34,8 +34,7 @@
 }
 
 .containingPane .clickablePane:pressed{
-    -fx-border-color: #000000;
-    -fx-border-color: #DAD1E9;
+    -fx-border-color: #dad1e9;
     -fx-border-width: 5px;
 }
 
