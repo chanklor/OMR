@@ -34,9 +34,9 @@
             <Label layoutX="266.0" layoutY="47.0" text="Tamaño de alveolo" />
             <Label layoutX="379.0" layoutY="47.0" text="Columnas" />
             <Label layoutX="494.0" layoutY="47.0" text="Filas" />
-            <TextField fx:id="tfStarting" layoutX="14.0" layoutY="168.0" prefHeight="30.0" prefWidth="248.0" />
+            <TextField fx:id="tfStarting" editable="false" layoutX="14.0" layoutY="168.0" prefHeight="30.0" prefWidth="248.0" />
             <Button fx:id="btnAdd" layoutX="498.0" layoutY="207.0" mnemonicParsing="false" text="Confirmar" />
-            <TextField fx:id="tfEnding" layoutX="275.0" layoutY="168.0" prefHeight="30.0" prefWidth="248.0" />
+            <TextField fx:id="tfEnding" editable="false" layoutX="275.0" layoutY="168.0" prefHeight="30.0" prefWidth="248.0" />
             <Label layoutX="14.0" layoutY="152.0" text="Coordenadas Iniciales" />
             <Label layoutX="275.0" layoutY="152.0" text="Coordenadas finales" />
          </children>

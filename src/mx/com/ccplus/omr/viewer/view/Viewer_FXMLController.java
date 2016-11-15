@@ -52,7 +52,21 @@ public class Viewer_FXMLController implements Initializable {
         imageView.setPreserveRatio(true);
         canvas.setHeight(imageView.getBoundsInParent().getHeight());
         canvas.setWidth(imageView.getBoundsInParent().getWidth());
+        
+        disableAllViews();
+        
+        
     }    
+    
+    private void disableAllViews(){
+        tfName.setEditable(false);
+        tfSize.setEditable(false);
+        tfColumns.setEditable(false);
+        tfRows.setEditable(false);
+        btnChooseCoords.setDisable(true);
+        btnAdd.setDisable(true);
+        btnAccept.setDisable(true);
+    }
     
     @FXML
     private void handleCanvasOnMouseEnter(Event event) {
@@ -70,6 +84,8 @@ public class Viewer_FXMLController implements Initializable {
         imageView.setImage(image);
         canvas.setHeight(imageView.getBoundsInParent().getHeight());
         canvas.setWidth(imageView.getBoundsInParent().getWidth());
+        
+        
     }
     
 }
