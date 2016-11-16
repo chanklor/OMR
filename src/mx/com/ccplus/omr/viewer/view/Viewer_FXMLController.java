@@ -55,6 +55,8 @@ public class Viewer_FXMLController implements Initializable {
         
         disableAllViews();
         
+        gc.setFill(new Color(0,0,0,0.2));
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         
     }    
     
@@ -84,8 +86,24 @@ public class Viewer_FXMLController implements Initializable {
         imageView.setImage(image);
         canvas.setHeight(imageView.getBoundsInParent().getHeight());
         canvas.setWidth(imageView.getBoundsInParent().getWidth());
+                
+        enableAddMatrixDetailsViews();
+    }
+    
+    private void enableAddMatrixDetailsViews(){
+        tfName.setEditable(true);
+        tfSize.setEditable(true);
+        tfColumns.setEditable(true);
+        tfRows.setEditable(true);
+        btnChooseCoords.setDisable(false);
+    }
+    
+    @FXML
+    private void handleBtnChooseC(Event event){
+        btnAdd.setDisable(false);
+        btnChooseCoords.setDisable(true);
         
-        
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
     
 }
