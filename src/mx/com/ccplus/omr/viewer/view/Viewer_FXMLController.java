@@ -2,6 +2,8 @@ package mx.com.ccplus.omr.viewer.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,14 +39,17 @@ public class Viewer_FXMLController implements Initializable {
     
     @FXML private Button btnAdd;
     
-    
-    
     @FXML private Button btnDelete;
     
     @FXML private Button btnAccept;
     
     private GraphicsContext gc;
     private Image image;
+    
+    private boolean flagTfName = false;
+    private boolean flagTfSize = false;
+    private boolean flagTfColumns = false;
+    private boolean flagTfRows = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,13 +66,40 @@ public class Viewer_FXMLController implements Initializable {
     }    
     
     private void disableAllViews(){
-        tfName.setEditable(false);
-        tfSize.setEditable(false);
-        tfColumns.setEditable(false);
-        tfRows.setEditable(false);
+        tfName.setDisable(true);
+        tfSize.setDisable(true);
+        tfColumns.setDisable(true);
+        tfRows.setDisable(true);
         btnChooseCoords.setDisable(true);
         btnAdd.setDisable(true);
         btnAccept.setDisable(true);
+    }
+    
+    private void setupTextFieldListeners(){
+        tfName.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                flagTfName = (newValue.equals("") ? false : true);
+            }
+        });
+        tfSize.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                flagTfSize = (newValue.equals("") ? false : true);
+            }
+        });
+        tfColumns.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                flagTfColumns = (newValue.equals("") ? false : true);
+            }
+        });
+        tfRows.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                flagTfRows = (newValue.equals("") ? false : true);
+            }
+        });
     }
     
     @FXML
@@ -91,18 +123,19 @@ public class Viewer_FXMLController implements Initializable {
     }
     
     private void enableAddMatrixDetailsViews(){
-        tfName.setEditable(true);
-        tfSize.setEditable(true);
-        tfColumns.setEditable(true);
-        tfRows.setEditable(true);
-        btnChooseCoords.setDisable(false);
+        tfName.setDisable(false);
+        tfSize.setDisable(false);
+        tfColumns.setDisable(false);
+        tfRows.setDisable(false);
     }
     
     @FXML
     private void handleBtnChooseC(Event event){
+        
+        
+        
         btnAdd.setDisable(false);
         btnChooseCoords.setDisable(true);
-        
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
     
