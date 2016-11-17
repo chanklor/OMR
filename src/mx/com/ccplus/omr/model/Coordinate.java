@@ -27,4 +27,12 @@ public class Coordinate {
     public void setY(int Y) {
         this.Y = Y;
     }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" + "X=" + X + ", Y=" + Y + '}';
+    }
+    
+    
+    
 }
