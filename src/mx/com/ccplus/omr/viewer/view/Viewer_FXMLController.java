@@ -30,10 +30,7 @@ public class Viewer_FXMLController implements Initializable {
     @FXML private TextField tfName;
     @FXML private TextField tfSize;
     @FXML private TextField tfColumns;
-    @FXML private TextField tfRows;
-    
-    @FXML private Button btnChooseCoords;
-    
+    @FXML private TextField tfRows;   
     @FXML private TextField tfStarting;
     @FXML private TextField tfEnding;
     
@@ -59,6 +56,7 @@ public class Viewer_FXMLController implements Initializable {
         canvas.setWidth(imageView.getBoundsInParent().getWidth());
         
         disableAllViews();
+        setupTextFieldListeners();
         
         gc.setFill(new Color(0,0,0,0.2));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -70,7 +68,6 @@ public class Viewer_FXMLController implements Initializable {
         tfSize.setDisable(true);
         tfColumns.setDisable(true);
         tfRows.setDisable(true);
-        btnChooseCoords.setDisable(true);
         btnAdd.setDisable(true);
         btnAccept.setDisable(true);
     }
@@ -80,24 +77,32 @@ public class Viewer_FXMLController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 flagTfName = (newValue.equals("") ? false : true);
+                if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) enableChooseC();
+                else disableChooseC();
             }
         });
         tfSize.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 flagTfSize = (newValue.equals("") ? false : true);
+                if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) enableChooseC();
+                else disableChooseC();
             }
         });
         tfColumns.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 flagTfColumns = (newValue.equals("") ? false : true);
+                if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) enableChooseC();
+                else disableChooseC();
             }
         });
         tfRows.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 flagTfRows = (newValue.equals("") ? false : true);
+                if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) enableChooseC();
+                else disableChooseC();
             }
         });
     }
@@ -129,14 +134,15 @@ public class Viewer_FXMLController implements Initializable {
         tfRows.setDisable(false);
     }
     
-    @FXML
-    private void handleBtnChooseC(Event event){
-        
-        
-        
-        btnAdd.setDisable(false);
-        btnChooseCoords.setDisable(true);
+    private void enableChooseC(){
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
+    
+    private void disableChooseC(){
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(new Color(0,0,0,0.2));
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+   
     
 }
