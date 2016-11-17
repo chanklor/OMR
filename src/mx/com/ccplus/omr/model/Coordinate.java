@@ -1,4 +1,4 @@
-package mx.com.ccplus.omr.viewer.model;
+package mx.com.ccplus.omr.model;
 
 public class Coordinate {
     private int X;
