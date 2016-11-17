@@ -2,6 +2,7 @@ package mx.com.ccplus.omr.viewer.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -12,8 +13,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import mx.com.ccplus.omr.viewer.Viewer;
 
@@ -56,7 +60,7 @@ public class Viewer_FXMLController implements Initializable {
         canvas.setWidth(imageView.getBoundsInParent().getWidth());
         
         disableAllViews();
-        setupTextFieldListeners();
+        setupTextFields();
         
         gc.setFill(new Color(0,0,0,0.2));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -72,7 +76,22 @@ public class Viewer_FXMLController implements Initializable {
         btnAccept.setDisable(true);
     }
     
-    private void setupTextFieldListeners(){
+    private UnaryOperator<Change> getFilter() {
+        return change -> {
+            String text = change.getText();
+            for (int i = 0; i < text.length(); i++)
+            if (!Character.isDigit(text.charAt(i)))
+                return null;
+            return change;
+        };
+    }    
+    
+    private void setupTextFields(){
+        
+        tfSize.setTextFormatter(new TextFormatter<>(getFilter()));
+        tfColumns.setTextFormatter(new TextFormatter<>(getFilter()));
+        tfRows.setTextFormatter(new TextFormatter<>(getFilter()));
+        
         tfName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -109,12 +128,21 @@ public class Viewer_FXMLController implements Initializable {
     
     @FXML
     private void handleCanvasOnMouseEnter(Event event) {
-        canvas.getScene().setCursor(Cursor.CROSSHAIR);
+        if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) canvas.getScene().setCursor(Cursor.CROSSHAIR);
     }
     
     @FXML
     private void handleCanvasOnMouseExit(Event event) {
         canvas.getScene().setCursor(Cursor.DEFAULT);
+    }
+    
+    @FXML
+    private void handleCanvasOnMouseMoved(MouseEvent event) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        int pixelSize = (Integer.parseInt(tfSize.getText()) * 2) + 1;
+        gc.setFill(new Color(1,0,0,0.4));
+        gc.fillOval(event.getX()-((int)(pixelSize/2)), event.getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
+        
     }
     
     @FXML
