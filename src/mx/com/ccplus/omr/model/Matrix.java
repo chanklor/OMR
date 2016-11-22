@@ -1,5 +1,7 @@
 package mx.com.ccplus.omr.model;
 
+import java.util.Arrays;
+
 public class Matrix {
     private String name;
     private int columns;
@@ -44,7 +46,7 @@ public class Matrix {
 
     @Override
     public String toString() {
-        return "Matrix{" + "name=" + name + ", columns=" + columns + ", rows=" + rows + ", diameter=" + diameter + ", coordinates=" + coordinates + '}';
+        return "Matrix{" + "name=" + name + ", columns=" + columns + ", rows=" + rows + ", diameter=" + diameter + ", coordinates=" + Arrays.deepToString(coordinates) + '}';
     }
     
     
