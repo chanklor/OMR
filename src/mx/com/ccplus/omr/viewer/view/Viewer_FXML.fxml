@@ -17,7 +17,7 @@
       <StackPane layoutX="638.0" maxHeight="740.0" maxWidth="572.0" minHeight="740.0" minWidth="572.0" prefHeight="740.0" prefWidth="572.0" styleClass="stackpane">
          <children>
             <ImageView fx:id="imageView" fitHeight="740.0" fitWidth="572.0" pickOnBounds="true" preserveRatio="true" />
-            <Canvas fx:id="canvas" height="740.0" onMouseDragged="#handleCanvasOnMouseDrag" onMouseEntered="#handleCanvasOnMouseEnter" onMouseExited="#handleCanvasOnMouseExit" onMouseMoved="#handleCanvasOnMouseMoved" onMousePressed="#handleCanvasOnMousePressed" width="572.0" />
+            <Canvas fx:id="canvas" height="740.0" onMouseDragged="#handleCanvasOnMouseDrag" onMouseEntered="#handleCanvasOnMouseEnter" onMouseExited="#handleCanvasOnMouseExit" onMouseMoved="#handleCanvasOnMouseMoved" onMousePressed="#handleCanvasOnMousePressed" onMouseReleased="#handleCanvasOnMouseReleased" width="572.0" />
          </children>
       </StackPane>
       <Button fx:id="btnLoad" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleBtnLoad" text="Cargar Documento" />

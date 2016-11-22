@@ -20,12 +20,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import mx.com.ccplus.omr.model.Coordinate;
+import mx.com.ccplus.omr.model.Matrix;
 import mx.com.ccplus.omr.model.Template;
 import mx.com.ccplus.omr.viewer.Viewer;
 
 public class Viewer_FXMLController implements Initializable {
     
     Template template = new Template();
+    Matrix temporaryMatrix;
     Coordinate startingPoint = new Coordinate();
     Coordinate currentPoint = new Coordinate();
     
@@ -150,6 +152,9 @@ public class Viewer_FXMLController implements Initializable {
             gc.setFill(new Color(1,0,0,0.4));
             gc.fillOval(event.getX()-((int)(pixelSize/2)), event.getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
         }
+        
+        if(temporaryMatrix != null) drawCoordinateArray(temporaryMatrix.getCoordinates(), temporaryMatrix.getDiameter());
+        
     }
     
     @FXML
@@ -172,37 +177,31 @@ public class Viewer_FXMLController implements Initializable {
         
             currentPoint.setX((int) event.getX());
             currentPoint.setY((int) event.getY());
-
-            double deltaX = (double) (currentPoint.getX() - startingPoint.getX());
-            double deltaY = (double) (currentPoint.getY() - startingPoint.getY());
-
-            double stepX = deltaX / (double) (numberColumn - 1);
-            double stepY = deltaY / (double) (numberRow - 1);
             
-            Coordinate[][] coordinateArray = new Coordinate[numberColumn][numberRow];
+            drawCoordinateArray(new Matrix("test1", numberColumn, numberRow, pixelSize, startingPoint, currentPoint).getCoordinates(), pixelSize);
             
-            for (int i = 0; i < coordinateArray.length; i++) {
-                for (int j = 0; j < coordinateArray[0].length; j++) {
-                    Coordinate c = new Coordinate();
-
-                    double cX = ((double) startingPoint.getX()) + (stepX * (double) i) + 0.5;
-                    c.setX((int) cX);
-                    double cY = ((double) startingPoint.getY()) + (stepY * (double) j) + 0.5;
-                    c.setY((int) cY);
-
-                    coordinateArray[i][j] = c;
-                }
-            }
             
-            drawCoordinateArray(coordinateArray, pixelSize);
+
         }
     }
     
-    private void drawCoordinateArray(Coordinate[][] coordinateArray, int pixelSize){
+    @FXML
+    private void handleCanvasOnMouseReleased(MouseEvent event) {
+        if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) {
+            int numberColumn = Integer.parseInt(tfColumns.getText());
+            int numberRow = Integer.parseInt(tfRows.getText());
+            int pixelSize = (Integer.parseInt(tfSize.getText()) * 2) + 1;
+            currentPoint.setX((int) event.getX());
+            currentPoint.setY((int) event.getY());
+            temporaryMatrix = new Matrix(tfName.getText(), numberColumn, numberRow, pixelSize, startingPoint, currentPoint);
+        }
+    }
+    
+    private void drawCoordinateArray(Coordinate[][] coordinateArray, int diameter){
         gc.setFill(new Color(1,0,0,0.4));
         for (int i = 0; i < coordinateArray.length; i++) {
             for (int j = 0; j < coordinateArray[0].length; j++) {
-                gc.fillOval(coordinateArray[i][j].getX()-((int)(pixelSize/2)), coordinateArray[i][j].getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
+                gc.fillOval(coordinateArray[i][j].getX()-((int)(diameter/2)), coordinateArray[i][j].getY()-((int)(diameter/2)), diameter, diameter);
             }
         }
     }
