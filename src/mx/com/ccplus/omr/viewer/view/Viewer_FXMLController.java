@@ -232,6 +232,11 @@ public class Viewer_FXMLController implements Initializable {
         gc.setFill(new Color(0,0,0,0.2));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
+    
+    @FXML
+    private void handleBtnAdd(Event event){
+        template.getMatrixes().add(temporaryMatrix);
+    }
    
     
 }
