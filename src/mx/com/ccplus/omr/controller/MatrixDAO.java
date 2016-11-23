@@ -1,10 +1,12 @@
 package mx.com.ccplus.omr.controller;
 
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
+import mx.com.ccplus.omr.view.viewer.model.RegMatrix;
 
 public class MatrixDAO {
     
@@ -67,18 +69,22 @@ public class MatrixDAO {
     public int transformCursorDiameterToBubbleDiameter(int diameter, ImageView imageView, Image image){
         double node_height = imageView.getBoundsInParent().getHeight();
         double image_height = image.getHeight();
+        //for images wider than larger width must be used instead of height
         return (int) ( ((double) (image_height/node_height)) * diameter);
     }
     
     public int transformBubbleDiameterToCursorDiameter(int diameter, ImageView imageView, Image image){
         double node_heigth = imageView.getBoundsInParent().getWidth();
         double image_heigth = image.getWidth();
+        //for images wider than larger width must be used instead of height
         return (int) ( ((double) (node_heigth/image_heigth)) * diameter);
     }
     
     public Matrix transformRealMatrixToNodeMatrix(Matrix matrix, ImageView imageView, Image image){
         return new Matrix("dummy", matrix.getColumns(), matrix.getRows(), transformBubbleDiameterToCursorDiameter(matrix.getDiameter(), imageView, image), matrix.getHue(), transformImageLocationToMouseCoordinate(matrix.getStartingCoordinate(), imageView, image), transformImageLocationToMouseCoordinate(matrix.getEndingCoordinate(), imageView, image));
     }
+    
+    //public ArrayList<RegMatrix> transformMatrixArra
     
     
 }
