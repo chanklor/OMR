@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import mx.com.ccplus.omr.controller.CoordinateDAO;
 import mx.com.ccplus.omr.controller.MatrixDAO;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
@@ -203,17 +204,13 @@ public class Viewer_FXMLController implements Initializable {
             gc.fillOval(event.getX()-((int)(pixelSize/2)), event.getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
             
             if(temporaryMatrix == null){
-                Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(event, imageView, image);
+                Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(new Coordinate(event.getX(), event.getY()), imageView, image);
                 tfStarting.setText(df.format(d.getX()) + ", " + df.format(d.getY()));
             }
             
-            if(temporaryMatrix != null) drawMatrix(temporaryMatrix);
+            if(temporaryMatrix != null) drawRealMatrix(temporaryMatrix);
             drawAllMatrixes();
         }
-        
-       
-        
-        
         
     }
     
@@ -242,7 +239,7 @@ public class Viewer_FXMLController implements Initializable {
             
             drawMatrix(new Matrix("test1", numberColumn, numberRow, pixelSize, (COLOR_HUE_STEP * (float) colorCounter), startingPoint, currentPoint));
             
-            Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(event, imageView, image);
+            Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(new Coordinate(event.getX(), event.getY()), imageView, image);
             tfEnding.setText(df.format(d.getX()) + ", " + df.format(d.getY()));
             
             drawAllMatrixes();
@@ -258,7 +255,7 @@ public class Viewer_FXMLController implements Initializable {
             int pixelSize = (Integer.parseInt(tfSize.getText()) * 2) + 1;
             currentPoint.setX((int) event.getX());
             currentPoint.setY((int) event.getY());
-            temporaryMatrix = new Matrix(tfName.getText(), numberColumn, numberRow, pixelSize, (COLOR_HUE_STEP * (float) colorCounter), startingPoint, currentPoint);
+            temporaryMatrix = new Matrix(tfName.getText(), numberColumn, numberRow, matrixDAO.transformCursorDiameterToBubbleDiameter(pixelSize, imageView, image), (COLOR_HUE_STEP * (float) colorCounter), matrixDAO.transformMouseCoordinateToImageLocation(startingPoint, imageView, image), matrixDAO.transformMouseCoordinateToImageLocation(currentPoint, imageView, image));
             
             disableAddMatrixDetailsViews();
             btnAdd.setDisable(false);
@@ -277,9 +274,21 @@ public class Viewer_FXMLController implements Initializable {
         }
     }
     
+    private void drawRealMatrix(Matrix matrix){
+        Matrix dummyMatrix = matrixDAO.transformRealMatrixToNodeMatrix(matrix, imageView, image);
+        gc.setFill(Color.hsb(dummyMatrix.getHue(), COLOR_SATURATION, COLOR_BRIGHTNESS, COLOR_OPACITY));
+        Coordinate[][] coordinateArray = matrixDAO.getCoordinates(dummyMatrix);
+        double diameter = (double) dummyMatrix.getDiameter();
+        for (int i = 0; i < coordinateArray.length; i++) {
+            for (int j = 0; j < coordinateArray[0].length; j++) {
+                gc.fillOval(coordinateArray[i][j].getX()-(diameter/2), coordinateArray[i][j].getY()-(diameter/2), diameter, diameter);
+            }
+        }
+    }
+        
     private void drawAllMatrixes(){
         for (int i = 0; i < template.getMatrixes().size(); i++) {
-            drawMatrix(template.getMatrixes().get(i));
+            drawRealMatrix(template.getMatrixes().get(i));
         }
     }
     

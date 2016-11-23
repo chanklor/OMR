@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.com.ccplus.omr.controller;
 
 import javafx.scene.image.Image;
@@ -11,10 +6,6 @@ import javafx.scene.input.MouseEvent;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
 
-/**
- *
- * @author 47385
- */
 public class MatrixDAO {
     
     public Coordinate[][] getCoordinates(Matrix matrix){
@@ -44,9 +35,9 @@ public class MatrixDAO {
         
     }
     
-    public Coordinate transformMouseCoordinateToImageLocation(MouseEvent event, ImageView imageView, Image image){
-        double cursor_width = event.getX();
-        double cursor_height = event.getY();
+    public Coordinate transformMouseCoordinateToImageLocation(Coordinate mouseCoordinate, ImageView imageView, Image image){
+        double cursor_width = mouseCoordinate.getX();
+        double cursor_height = mouseCoordinate.getY();
 
         double node_height = imageView.getBoundsInParent().getHeight();
         double node_width = imageView.getBoundsInParent().getWidth();
@@ -72,5 +63,22 @@ public class MatrixDAO {
         
         return new Coordinate(d1, d2);
     }
+    
+    public int transformCursorDiameterToBubbleDiameter(int diameter, ImageView imageView, Image image){
+        double node_height = imageView.getBoundsInParent().getHeight();
+        double image_height = image.getHeight();
+        return (int) ( ((double) (image_height/node_height)) * diameter);
+    }
+    
+    public int transformBubbleDiameterToCursorDiameter(int diameter, ImageView imageView, Image image){
+        double node_heigth = imageView.getBoundsInParent().getWidth();
+        double image_heigth = image.getWidth();
+        return (int) ( ((double) (node_heigth/image_heigth)) * diameter);
+    }
+    
+    public Matrix transformRealMatrixToNodeMatrix(Matrix matrix, ImageView imageView, Image image){
+        return new Matrix("dummy", matrix.getColumns(), matrix.getRows(), transformBubbleDiameterToCursorDiameter(matrix.getDiameter(), imageView, image), matrix.getHue(), transformImageLocationToMouseCoordinate(matrix.getStartingCoordinate(), imageView, image), transformImageLocationToMouseCoordinate(matrix.getEndingCoordinate(), imageView, image));
+    }
+    
     
 }
