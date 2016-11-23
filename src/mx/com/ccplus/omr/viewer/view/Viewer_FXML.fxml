@@ -21,7 +21,7 @@
          </children>
       </StackPane>
       <Button fx:id="btnLoad" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleBtnLoad" text="Cargar Documento" />
-      <Label layoutX="279.0" layoutY="14.0" styleClass="titulo" text="OMR" />
+      <Label layoutX="279.0" layoutY="14.0" onMouseClicked="#handleBtnAccept" styleClass="titulo" text="OMR" />
       <Pane layoutX="14.0" layoutY="133.0" prefHeight="213.0" prefWidth="609.0" styleClass="containingPane">
          <children>
             <Label layoutX="7.0" layoutY="4.0" styleClass="subtitulo" text="Agregar Nueva Matriz de Respuestas" />
@@ -34,7 +34,7 @@
             <Label layoutX="379.0" layoutY="47.0" text="Columnas" />
             <Label layoutX="461.0" layoutY="47.0" text="Filas" />
             <TextField fx:id="tfStarting" disable="true" editable="false" layoutX="14.0" layoutY="119.0" prefHeight="30.0" prefWidth="203.0" />
-            <Button fx:id="btnAdd" layoutX="497.0" layoutY="158.0" mnemonicParsing="false" text="Confirmar" />
+            <Button fx:id="btnAdd" layoutX="497.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleBtnAdd" text="Confirmar" />
             <TextField fx:id="tfEnding" disable="true" editable="false" layoutX="230.0" layoutY="119.0" prefHeight="30.0" prefWidth="203.0" />
             <Label layoutX="14.0" layoutY="103.0" text="Coordenadas Iniciales" />
             <Label layoutX="230.0" layoutY="103.0" text="Coordenadas finales" />
@@ -43,15 +43,15 @@
       <Pane layoutX="14.0" layoutY="365.0" prefHeight="272.0" prefWidth="609.0" styleClass="containingPane">
          <children>
             <Label layoutX="8.0" layoutY="8.0" styleClass="subtitulo" text="Lista de Matrices de Respuestas" />
-            <TableView layoutX="15.0" layoutY="46.0" prefHeight="213.0" prefWidth="579.0">
+            <TableView fx:id="tableMatrix" layoutX="15.0" layoutY="46.0" prefHeight="213.0" prefWidth="579.0">
               <columns>
-                <TableColumn prefWidth="33.0" text="ID" />
-                <TableColumn prefWidth="207.0" text="Nombre" />
-                  <TableColumn prefWidth="31.0" text="Color" />
-                  <TableColumn prefWidth="59.0" text="Columnas" />
-                  <TableColumn prefWidth="59.0" text="Filas" />
-                  <TableColumn prefWidth="85.0" text="Inicio" />
-                  <TableColumn prefWidth="85.0" text="Final" />
+                <TableColumn fx:id="colId" prefWidth="33.0" text="ID" />
+                <TableColumn fx:id="colName" prefWidth="207.0" text="Nombre" />
+                  <TableColumn fx:id="colColor" prefWidth="31.0" text="Color" />
+                  <TableColumn fx:id="colColumns" prefWidth="59.0" text="Columnas" />
+                  <TableColumn fx:id="colRows" prefWidth="59.0" text="Filas" />
+                  <TableColumn fx:id="colStarting" prefWidth="85.0" text="Inicio" />
+                  <TableColumn fx:id="colEnding" prefWidth="85.0" text="Final" />
               </columns>
             </TableView>
          </children>

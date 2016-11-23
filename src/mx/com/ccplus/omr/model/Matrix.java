@@ -1,20 +1,20 @@
 package mx.com.ccplus.omr.model;
 
-import java.util.Arrays;
-
 public class Matrix {
     private String name;
     private int columns;
     private int rows;
     private int diameter;
+    private float hue;
     private Coordinate startingCoordinate;
     private Coordinate endingCoordinate;
 
-    public Matrix(String name, int columns, int rows, int diameter, Coordinate startingCoordinate, Coordinate endingCoordinate) {
+    public Matrix(String name, int columns, int rows, int diameter, float hue, Coordinate startingCoordinate, Coordinate endingCoordinate) {
         this.name = name;
         this.columns = columns;
         this.rows = rows;
         this.diameter = diameter;
+        this.hue = hue;
         this.startingCoordinate = startingCoordinate;
         this.endingCoordinate = endingCoordinate;
     }
@@ -35,6 +35,10 @@ public class Matrix {
         return diameter;
     }
 
+    public float getHue() {
+        return hue;
+    }
+
     public Coordinate getStartingCoordinate() {
         return startingCoordinate;
     }
@@ -45,8 +49,10 @@ public class Matrix {
 
     @Override
     public String toString() {
-        return "Matrix{" + "name=" + name + ", columns=" + columns + ", rows=" + rows + ", diameter=" + diameter + ", startingCoordinate=" + startingCoordinate + ", endingCoordinate=" + endingCoordinate + '}';
+        return "Matrix{" + "name=" + name + ", columns=" + columns + ", rows=" + rows + ", diameter=" + diameter + ", hue=" + hue + ", startingCoordinate=" + startingCoordinate + ", endingCoordinate=" + endingCoordinate + '}';
     }
+
+
     
     public Coordinate[][] getCoordinates(){
         
