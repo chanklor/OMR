@@ -1,4 +1,4 @@
-package mx.com.ccplus.omr.viewer.model;
+package mx.com.ccplus.omr.view.viewer.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

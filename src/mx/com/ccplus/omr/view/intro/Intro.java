@@ -1,4 +1,4 @@
-package mx.com.ccplus.omr.intro;
+package mx.com.ccplus.omr.view.intro;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

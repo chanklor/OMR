@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="832.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.com.ccplus.omr.intro.view.Intro_FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="832.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.com.ccplus.omr.view.intro.view.Intro_FXMLController">
     <stylesheets>
         <URL value="@intro_fxml.css" />
     </stylesheets>

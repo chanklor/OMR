@@ -1,37 +1,34 @@
 package mx.com.ccplus.omr.model;
 
 public class Coordinate {
-    private int X;
-    private int Y;
+    private double X;
+    private double Y;
 
     public Coordinate() {
     }
 
-    public Coordinate(int X, int Y) {
+    public Coordinate(double X, double Y) {
         this.X = X;
         this.Y = Y;
     }
 
-    public int getX() {
+    public double getX() {
         return X;
     }
 
-    public void setX(int X) {
+    public void setX(double X) {
         this.X = X;
     }
 
-    public int getY() {
+    public double getY() {
         return Y;
     }
 
-    public void setY(int Y) {
+    public void setY(double Y) {
         this.Y = Y;
     }
 
-    @Override
-    public String toString() {
-        return "Coordinate{" + "X=" + X + ", Y=" + Y + '}';
-    }
+    
     
     
     

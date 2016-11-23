@@ -1,6 +1,6 @@
 package mx.com.ccplus.omr;
 
-import mx.com.ccplus.omr.intro.Intro;
+import mx.com.ccplus.omr.view.intro.Intro;
 
 public class OMR {
 

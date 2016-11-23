@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="740.0" maxWidth="1210.0" minHeight="740.0" minWidth="1210.0" prefHeight="740.0" prefWidth="1210.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.com.ccplus.omr.viewer.view.Viewer_FXMLController">
+<AnchorPane id="AnchorPane" maxHeight="740.0" maxWidth="1210.0" minHeight="740.0" minWidth="1210.0" prefHeight="740.0" prefWidth="1210.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.com.ccplus.omr.view.viewer.view.Viewer_FXMLController">
     <stylesheets>
         <URL value="@viewer_fxml.css" />
     </stylesheets>

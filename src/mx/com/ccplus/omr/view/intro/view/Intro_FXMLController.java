@@ -1,11 +1,11 @@
-package mx.com.ccplus.omr.intro.view;
+package mx.com.ccplus.omr.view.intro.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import mx.com.ccplus.omr.viewer.Viewer;
+import mx.com.ccplus.omr.view.viewer.Viewer;
 
 public class Intro_FXMLController implements Initializable {
 

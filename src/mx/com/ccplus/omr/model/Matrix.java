@@ -54,32 +54,7 @@ public class Matrix {
 
 
     
-    public Coordinate[][] getCoordinates(){
-        
-        double deltaX = (double) (endingCoordinate.getX() - startingCoordinate.getX());
-        double deltaY = (double) (endingCoordinate.getY() - startingCoordinate.getY());
-        
-        double stepX = deltaX / (double) (this.columns - 1);
-        double stepY = deltaY / (double) (this.rows - 1);
-        
-        Coordinate[][] coordinateArray = new Coordinate[this.columns][this.rows];
-
-        for (int i = 0; i < coordinateArray.length; i++) {
-            for (int j = 0; j < coordinateArray[0].length; j++) {
-                Coordinate c = new Coordinate();
-
-                double cX = ((double) startingCoordinate.getX()) + (stepX * (double) i) + 0.5;
-                c.setX((int) cX);
-                double cY = ((double) startingCoordinate.getY()) + (stepY * (double) j) + 0.5;
-                c.setY((int) cY);
-
-                coordinateArray[i][j] = c;
-            }
-        }
-        
-        return coordinateArray;
-        
-    }
+    
  
     
     

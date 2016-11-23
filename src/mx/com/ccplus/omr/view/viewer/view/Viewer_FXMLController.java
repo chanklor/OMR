@@ -1,4 +1,4 @@
-package mx.com.ccplus.omr.viewer.view;
+package mx.com.ccplus.omr.view.viewer.view;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -27,15 +27,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import mx.com.ccplus.omr.controller.MatrixDAO;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
 import mx.com.ccplus.omr.model.Template;
-import mx.com.ccplus.omr.viewer.Viewer;
-import mx.com.ccplus.omr.viewer.model.RegMatrix;
+import mx.com.ccplus.omr.view.viewer.Viewer;
+import mx.com.ccplus.omr.view.viewer.model.RegMatrix;
 
 public class Viewer_FXMLController implements Initializable {
     
     Template template = new Template();
+    MatrixDAO matrixDAO = new MatrixDAO();
     Matrix temporaryMatrix;
     Coordinate startingPoint = new Coordinate();
     Coordinate currentPoint = new Coordinate();
@@ -201,8 +203,8 @@ public class Viewer_FXMLController implements Initializable {
             gc.fillOval(event.getX()-((int)(pixelSize/2)), event.getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
             
             if(temporaryMatrix == null){
-                double[] d = getLocationInImage(event, imageView, image);
-                tfStarting.setText(df.format(d[0]) + ", " + df.format(d[1]));
+                Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(event, imageView, image);
+                tfStarting.setText(df.format(d.getX()) + ", " + df.format(d.getY()));
             }
             
             if(temporaryMatrix != null) drawMatrix(temporaryMatrix);
@@ -215,27 +217,13 @@ public class Viewer_FXMLController implements Initializable {
         
     }
     
-    private double[] getLocationInImage(MouseEvent event, ImageView imageView, Image image){
-        double cursor_width = event.getX();
-        double cursor_height = event.getY();
-
-        double node_height = imageView.getBoundsInParent().getHeight();
-        double node_width = imageView.getBoundsInParent().getWidth();
-
-        double image_height = image.getHeight();
-        double image_width = image.getWidth();
-
-        double d1 = (cursor_width/node_width)*image_width;
-        double d2 = (cursor_height/node_height)*image_height;
-        
-        return new double[]{d1, d2};
-    }
+    
     
     @FXML
     private void handleCanvasOnMousePressed(MouseEvent event) {
         if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) {
-            startingPoint.setX((int) event.getX());
-            startingPoint.setY((int) event.getY());
+            startingPoint.setX(event.getX());
+            startingPoint.setY(event.getY());
         }
     }
     
@@ -254,8 +242,8 @@ public class Viewer_FXMLController implements Initializable {
             
             drawMatrix(new Matrix("test1", numberColumn, numberRow, pixelSize, (COLOR_HUE_STEP * (float) colorCounter), startingPoint, currentPoint));
             
-            double[] d = getLocationInImage(event, imageView, image);
-            tfEnding.setText(df.format(d[0]) + ", " + df.format(d[1]));
+            Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(event, imageView, image);
+            tfEnding.setText(df.format(d.getX()) + ", " + df.format(d.getY()));
             
             drawAllMatrixes();
             
@@ -280,11 +268,11 @@ public class Viewer_FXMLController implements Initializable {
     
     private void drawMatrix(Matrix matrix){
         gc.setFill(Color.hsb(matrix.getHue(), COLOR_SATURATION, COLOR_BRIGHTNESS, COLOR_OPACITY));
-        Coordinate[][] coordinateArray = matrix.getCoordinates();
-        int diameter = matrix.getDiameter();
+        Coordinate[][] coordinateArray = matrixDAO.getCoordinates(matrix);
+        double diameter = (double) matrix.getDiameter();
         for (int i = 0; i < coordinateArray.length; i++) {
             for (int j = 0; j < coordinateArray[0].length; j++) {
-                gc.fillOval(coordinateArray[i][j].getX()-((int)(diameter/2)), coordinateArray[i][j].getY()-((int)(diameter/2)), diameter, diameter);
+                gc.fillOval(coordinateArray[i][j].getX()-(diameter/2), coordinateArray[i][j].getY()-(diameter/2), diameter, diameter);
             }
         }
     }
