@@ -17,6 +17,7 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,8 +28,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import mx.com.ccplus.omr.controller.CoordinateDAO;
 import mx.com.ccplus.omr.controller.MatrixDAO;
+import mx.com.ccplus.omr.misc.Utils;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
 import mx.com.ccplus.omr.model.Template;
@@ -70,7 +73,7 @@ public class Viewer_FXMLController implements Initializable {
     @FXML private TableColumn<RegMatrix, String> colEnding;
     
     private ObservableList<RegMatrix> listaObservableM = FXCollections.observableArrayList();
-    private FilteredList<RegMatrix> listaFiltradaM;
+    //private FilteredList<RegMatrix> listaFiltradaM;
     private SortedList<RegMatrix> listaOrdenadaM;
     
     @FXML private Button btnDelete;
@@ -80,10 +83,10 @@ public class Viewer_FXMLController implements Initializable {
     private GraphicsContext gc;
     private Image image;
     private int colorCounter = 0;
-    private final float COLOR_HUE_STEP = 0.5f;
-    private final float COLOR_SATURATION = 1f;
-    private final float COLOR_BRIGHTNESS = 1f;
-    private final float COLOR_OPACITY = 0.4f;
+    private final double COLOR_HUE_STEP = 67.5;
+    private final double COLOR_SATURATION = 1;
+    private final double COLOR_BRIGHTNESS = 1;
+    private final double COLOR_OPACITY = 0.6;
     
     private boolean flagTfName = false;
     private boolean flagTfSize = false;
@@ -99,6 +102,7 @@ public class Viewer_FXMLController implements Initializable {
         setupTextFields();
         
         setupColumnsM();
+        tablePrefsM();;
         
         setupCanvas();
         disableCavas();
@@ -169,6 +173,43 @@ public class Viewer_FXMLController implements Initializable {
         colRows.setCellValueFactory(new PropertyValueFactory<RegMatrix, String>("rows"));
         colStarting.setCellValueFactory(new PropertyValueFactory<RegMatrix, String>("starting"));
         colEnding.setCellValueFactory(new PropertyValueFactory<RegMatrix, String>("ending"));
+        
+        Callback<TableColumn<RegMatrix, String>, TableCell<RegMatrix, String>> cellFactory = new Callback<TableColumn<RegMatrix, String>, TableCell<RegMatrix, String>>() {
+            public TableCell call(TableColumn p) {
+                TableCell cell = new TableCell() {
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        double hue = Double.parseDouble(item.toString());
+                        System.out.println("Hue: " + df.format(hue));
+                        String code = Utils.getRGBoFromColor(Color.hsb(hue, COLOR_SATURATION, COLOR_BRIGHTNESS, COLOR_OPACITY));
+                        System.out.println("Code: " + code);
+                        setStyle("-fx-background-color:" + code);
+                        setText("");
+                    }
+                };
+
+
+                return cell;
+            }
+        };
+        
+        //colColor.setCellFactory(cellFactory);
+        
+    }
+    
+    private void tablePrefsM(){
+        //listaFiltradaH = new FilteredList<>(listaObservableH, p -> false);
+        //listaOrdenadaH = new SortedList<>(listaFiltradaH);
+        listaOrdenadaM = new SortedList<>(listaObservableM);
+        listaOrdenadaM.comparatorProperty().bind(tableMatrix.comparatorProperty());
+        tableMatrix.setItems(listaOrdenadaM);
+    }
+    
+    private void populateTable(){
+        listaObservableM.clear();
+        for(RegMatrix r : matrixDAO.transformMatrixArrayToRegArray(template)){
+            listaObservableM.add(r);
+        }
     }
         
     private void setupCanvas(){
@@ -199,7 +240,7 @@ public class Viewer_FXMLController implements Initializable {
         if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             int pixelSize = (Integer.parseInt(tfSize.getText()) * 2) + 1;
-            float hue = COLOR_HUE_STEP * (float) colorCounter;
+            double hue = COLOR_HUE_STEP * (double) colorCounter;
             gc.setFill(Color.hsb(hue, COLOR_SATURATION, COLOR_BRIGHTNESS, COLOR_OPACITY));
             gc.fillOval(event.getX()-((int)(pixelSize/2)), event.getY()-((int)(pixelSize/2)), pixelSize, pixelSize);
             
@@ -213,9 +254,7 @@ public class Viewer_FXMLController implements Initializable {
         }
         
     }
-    
-    
-    
+        
     @FXML
     private void handleCanvasOnMousePressed(MouseEvent event) {
         if(flagTfName && flagTfSize && flagTfColumns && flagTfRows) {
@@ -237,7 +276,7 @@ public class Viewer_FXMLController implements Initializable {
             currentPoint.setX((int) event.getX());
             currentPoint.setY((int) event.getY());
             
-            drawMatrix(new Matrix("test1", numberColumn, numberRow, pixelSize, (COLOR_HUE_STEP * (float) colorCounter), startingPoint, currentPoint));
+            drawMatrix(new Matrix("test1", numberColumn, numberRow, pixelSize, (COLOR_HUE_STEP * (double) colorCounter), startingPoint, currentPoint));
             
             Coordinate d = matrixDAO.transformMouseCoordinateToImageLocation(new Coordinate(event.getX(), event.getY()), imageView, image);
             tfEnding.setText(df.format(d.getX()) + ", " + df.format(d.getY()));
@@ -255,7 +294,7 @@ public class Viewer_FXMLController implements Initializable {
             int pixelSize = (Integer.parseInt(tfSize.getText()) * 2) + 1;
             currentPoint.setX((int) event.getX());
             currentPoint.setY((int) event.getY());
-            temporaryMatrix = new Matrix(tfName.getText(), numberColumn, numberRow, matrixDAO.transformCursorDiameterToBubbleDiameter(pixelSize, imageView, image), (COLOR_HUE_STEP * (float) colorCounter), matrixDAO.transformMouseCoordinateToImageLocation(startingPoint, imageView, image), matrixDAO.transformMouseCoordinateToImageLocation(currentPoint, imageView, image));
+            temporaryMatrix = new Matrix(tfName.getText(), numberColumn, numberRow, matrixDAO.transformCursorDiameterToBubbleDiameter(pixelSize, imageView, image), (COLOR_HUE_STEP * (double) colorCounter), matrixDAO.transformMouseCoordinateToImageLocation(startingPoint, imageView, image), matrixDAO.transformMouseCoordinateToImageLocation(currentPoint, imageView, image));
             
             disableAddMatrixDetailsViews();
             btnAdd.setDisable(false);
@@ -332,6 +371,7 @@ public class Viewer_FXMLController implements Initializable {
     @FXML
     private void handleBtnAdd(Event event){
         template.getMatrixes().add(temporaryMatrix);
+        populateTable();
         
         temporaryMatrix = null;
         startingPoint = new Coordinate();

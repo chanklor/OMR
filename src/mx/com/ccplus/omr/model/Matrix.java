@@ -5,11 +5,11 @@ public class Matrix {
     private int columns;
     private int rows;
     private int diameter;
-    private float hue;
+    private double hue;
     private Coordinate startingCoordinate;
     private Coordinate endingCoordinate;
 
-    public Matrix(String name, int columns, int rows, int diameter, float hue, Coordinate startingCoordinate, Coordinate endingCoordinate) {
+    public Matrix(String name, int columns, int rows, int diameter, double hue, Coordinate startingCoordinate, Coordinate endingCoordinate) {
         this.name = name;
         this.columns = columns;
         this.rows = rows;
@@ -35,7 +35,7 @@ public class Matrix {
         return diameter;
     }
 
-    public float getHue() {
+    public double getHue() {
         return hue;
     }
 

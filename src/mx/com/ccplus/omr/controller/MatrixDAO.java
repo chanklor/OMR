@@ -1,14 +1,18 @@
 package mx.com.ccplus.omr.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import mx.com.ccplus.omr.model.Coordinate;
 import mx.com.ccplus.omr.model.Matrix;
+import mx.com.ccplus.omr.model.Template;
 import mx.com.ccplus.omr.view.viewer.model.RegMatrix;
 
 public class MatrixDAO {
+    
+    private final DecimalFormat df = new DecimalFormat("#.00");
     
     public Coordinate[][] getCoordinates(Matrix matrix){
         
@@ -84,7 +88,16 @@ public class MatrixDAO {
         return new Matrix("dummy", matrix.getColumns(), matrix.getRows(), transformBubbleDiameterToCursorDiameter(matrix.getDiameter(), imageView, image), matrix.getHue(), transformImageLocationToMouseCoordinate(matrix.getStartingCoordinate(), imageView, image), transformImageLocationToMouseCoordinate(matrix.getEndingCoordinate(), imageView, image));
     }
     
-    //public ArrayList<RegMatrix> transformMatrixArra
+    public ArrayList<RegMatrix> transformMatrixArrayToRegArray(Template template){
+        ArrayList<RegMatrix> res = new ArrayList<RegMatrix>();
+        
+        for (int i = 0; i < template.getMatrixes().size(); i++) {
+            Matrix m = template.getMatrixes().get(i);
+            res.add(new RegMatrix(Integer.toString(i+1), m.getName(), df.format(m.getHue()), Integer.toString(m.getColumns()), Integer.toString(m.getRows()), df.format(m.getStartingCoordinate().getX()) + ", " + df.format(m.getStartingCoordinate().getY()), df.format(m.getEndingCoordinate().getX()) + ", " + df.format(m.getEndingCoordinate().getX())));
+        }
+        
+        return res;
+    }
     
     
 }

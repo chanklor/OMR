@@ -47,8 +47,8 @@
               <columns>
                 <TableColumn fx:id="colId" prefWidth="33.0" text="ID" />
                 <TableColumn fx:id="colName" prefWidth="207.0" text="Nombre" />
-                  <TableColumn fx:id="colColor" prefWidth="31.0" text="Color" />
-                  <TableColumn fx:id="colColumns" prefWidth="59.0" text="Columnas" />
+                  <TableColumn fx:id="colColor" prefWidth="32.0" text="Color" />
+                  <TableColumn fx:id="colColumns" prefWidth="58.0" text="Columnas" />
                   <TableColumn fx:id="colRows" prefWidth="59.0" text="Filas" />
                   <TableColumn fx:id="colStarting" prefWidth="85.0" text="Inicio" />
                   <TableColumn fx:id="colEnding" prefWidth="85.0" text="Final" />
